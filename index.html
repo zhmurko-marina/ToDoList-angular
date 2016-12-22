@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>To Do List</title>
+    <link rel="stylesheet" href="node_modules/materialize-css/dist/css/materialize.min.css">
+    <link rel="stylesheet" href="css/main.css">
+    <script src="node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="node_modules/jquery-ui-dist/jquery-ui.min.js"></script>
+    <script src="node_modules/angular/angular.min.js"></script>
+    <script src="node_modules/angular-ui-sortable/dist/sortable.min.js"></script>
+    <script src="node_modules/materialize-css/dist/js/materialize.min.js"></script>
+</head>
+<body>
+<div ng-app="TaskManager" class="container row">
+    <div class="content col l8 m10 offset-l2 offset-m1 s12" ng-controller="taskController">
+        <h1>ToDo List</h1>
+        <div>
+            <form>
+                <div class="inputContainer row">
+                    <input type="text" id="description" class="col s9 taskName" placeholder="New task..."
+                           ng-model="newTask">
+                    <button class="waves-effect waves-light btn" ng-click="addNew()">Add</button>
+                </div>
+            </form>
+        </div>
+        <ul class="taskList" ui-sortable="sortableOptions" ng-model="taskItem">
+            <li class="taskItem valign-wrapper z-depth-2 box" ng-repeat="taskItem in taskItem track by $index">
+                <span ng-click="taskItem.complete = !taskItem.complete; save();"
+                   ng-class="taskItem.complete ? 'checked' : ''">{{taskItem.description}}</span>
+                <button class="valign button-edit waves-effect waves-light btn" ng-click="editTask()">edit</button>
+                <button class="valign col s1 waves-effect waves-light btn" ng-click="deleteTask()">✕</button>
+            </li>
+        </ul>
+
+        <div class="edit row" ng-show="popup">
+            <div class="col l6 offset-l3 s10 offset-s1">
+                <div class="container">
+                    <input type="text" id="editInput" class="taskName" ng-model="editCurrentTask">
+                </div>
+                <div>
+                    <button class="waves-effect waves-light btn" ng-click="saveEdit()">save</button>
+                    <button class="waves-effect waves-light btn" ng-click="cancel()">cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="js/main.js"></script>
+</body>
+</html>
